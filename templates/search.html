@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    
+</head>
+    <body>
+        <h1 id="headline">{{ headline }}</h1>
+        <form action="search" method="GET">
+            <input type="text" name="searchinput" placeholder="Type your query...">
+            <button type="submit">Search!</button>
+        </form>
+        <p>{{ searchinfo }}</p>
+        {% for e in resultList %}
+            <a href={{e[0]}}>{{e[1]}}</a>
+            <p class="subcontent">{{e[2]}}</p>
+        {% endfor %}
+    </body>
+</html>

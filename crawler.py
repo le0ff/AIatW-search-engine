@@ -28,9 +28,11 @@ while link_stack:
         #parse content with bs4
         soup = BeautifulSoup(r.content, 'html.parser')
         #add link and content to dictionary
+
         visited_links[current_link] = {
             'title': soup.title.string if soup.title else "",
-            'content': soup.get_text() #maybe optimize this to just use main-content
+            'content': soup.get_text(), #maybe optimize this to just use main-content
+            'main-content': soup.p.text
         }
 
         #iterate over all links on current site (current_link)
@@ -45,7 +47,7 @@ while link_stack:
 
 
 #create schema for indexlist with title, content and link
-schema = Schema(title=TEXT(stored=True), content=TEXT(stored=True), link=ID(stored=True))
+schema = Schema(title=TEXT(stored=True), content=TEXT(stored=True), main_content=TEXT(stored=True), link=ID(stored=True))
 
 #create an index in the directory indexdir
 ix = create_in("indexdir", schema)
@@ -53,11 +55,11 @@ writer = ix.writer()
 
 for key in visited_links:
     #do we have to use the 'u' in front of the strings here too?
-    writer.add_document(title=visited_links[key]['title'], content=visited_links[key]['content'], link=key)
+    writer.add_document(title=visited_links[key]['title'], content=visited_links[key]['content'], main_content=visited_links[key]['main-content'], link=key)
 
 #commit changes
 writer.commit()
 
 #visualization of dictionary visited_links [CAN BE REMOVED LATER]
-for link in visited_links:
-    print(visited_links[link]['title'], ":", link)
+# for link in visited_links:
+#     print(visited_links[link]['title'], ":", link)
