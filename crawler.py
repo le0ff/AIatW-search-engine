@@ -27,12 +27,26 @@ while link_stack:
     if  199 < r.status_code < 299:
         #parse content with bs4
         soup = BeautifulSoup(r.content, 'html.parser')
+
+        #not sure about this part so far
+        extracted_soup = BeautifulSoup(r.content, 'html.parser')
+        #tags that should be extracted before we retrieve main-content 
+        #we decided to leave 'a' tags out for our case, but generally
+        #the 'a' tags could contain important information and be mid-sentence
+        
+        tags_to_extract = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'a']
+        #extracting tags from extracted_soup
+        for tag in extracted_soup.find_all(tags_to_extract):
+            tag.extract()
+
+        
         #add link and content to dictionary
 
         visited_links[current_link] = {
             'title': soup.title.string if soup.title else "",
             'content': soup.get_text(), #maybe optimize this to just use main-content
-            'main-content': soup.p.text
+            #'main-content': soup.p.text
+            'main-content': extracted_soup.body.get_text(separator='\n', strip=True)
         }
 
         #iterate over all links on current site (current_link)
