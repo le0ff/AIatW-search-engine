@@ -36,7 +36,7 @@ app = Flask(__name__)
 #starting page
 @app.route("/")
 def start():
-    return render_template("start.html", title="AIatW Project1", headline="Search Engine v. 0.1.1")
+    return render_template("start.html", title="AI and the Quokkas", headline="Quokka Search v. 1.0.1")
 
 #search page
 @app.route("/search")
@@ -45,5 +45,5 @@ def search():
     indexContent, time = searchingIndex(request.args.get('searchinput'))
     searchInf = f"There are {len(indexContent)} results for '{request.args.get('searchinput')}' in {round(time, 3)} seconds"
     #load template for search using parameters
-    return render_template("search.html", title="AIatW Project1", headline="Search Engine v. 0.1.1", searchinfo=searchInf, resultList=indexContent)
+    return render_template("search.html", title="AI and the Quokkas", headline="Quokka Search v. 1.0.1", searchinfo=searchInf, resultList=indexContent)
     
