@@ -46,4 +46,6 @@ def search():
     searchInf = f"There are {len(indexContent)} results for '{request.args.get('searchinput')}' in {round(time, 3)} seconds"
     #load template for search using parameters
     return render_template("search.html", title="AI and the Quokkas", headline="Quokka Search v. 1.0.1", searchinfo=searchInf, resultList=indexContent)
-    
+
+
+# whoosh highlighting the search term
