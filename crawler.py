@@ -45,7 +45,7 @@ while link_stack:
         visited_links[current_link] = {
             'title': soup.title.string if soup.title else "",
             'content': soup.get_text(), #maybe optimize this to just use main-content
-            #'main-content': soup.p.text
+            #get all of the text-content of the body
             'main-content': extracted_soup.body.get_text(separator='\n', strip=True)
         }
 

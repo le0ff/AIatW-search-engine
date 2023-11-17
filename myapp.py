@@ -25,7 +25,10 @@ def searchingIndex(search_prompt):
 
         #iterate over results filling the list with sublist which contain the search-result-information
         for r in results:
-            resultList.append([r['link'], r['title'], r['main_content'][:display_length]+"..."])
+            #with highlights() method from whoosh, we no longer would need the 'main_content',
+            #therefore could change our schema for index too.
+            #resultList.append([r['link'], r['title'], r['main_content'][:display_length]+"..."])
+            resultList.append([r['link'], r['title'], "[...]" + r.highlights("content") + "[...]"])
     
     stop_time = time.time()
     return resultList, (stop_time-start_time)
@@ -46,6 +49,3 @@ def search():
     searchInf = f"There are {len(indexContent)} results for '{request.args.get('searchinput')}' in {round(time, 3)} seconds"
     #load template for search using parameters
     return render_template("search.html", title="AI and the Quokkas", headline="Quokka Search v. 1.0.1", searchinfo=searchInf, resultList=indexContent)
-
-
-# whoosh highlighting the search term
