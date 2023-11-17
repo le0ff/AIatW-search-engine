@@ -5,93 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ title }}</title>
     <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/3878/3878562.png" type="image/x-icon">
-    <style> 
-
-    body { /* wir sprechen alle body elemente direkt an*/
-        background-color: #eed2b4; /* hintergrundfarbe */
-        padding: 30px;
-        padding-top: 20px;
-    }
-
-    .top_part {
-        display: flex;
-        justify-content: space-between;
-        border-bottom: 3px solid transparent;
-        border-color: #b58656;
-    }
-
-    .results {
-        display: flex;
-        flex-direction: column;
-        padding-top: 20px;
-    }
-
-    .result_element {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .result_title {
-        font-size: 25px;
-    }
-    
-    .result_link {
-        font-size: 15px;
-        color: rgb(80, 80, 83);
-    }
-    
-    .result_content {
-        font-size: 18px;
-        padding-bottom: 20px;
-    }
-
-    a{
-        color:#b58656;
-        text-decoration: none;
-    }
-
-    a:hover { /* veränderte eigenschaften, wenn man über dem link hovert */
-        color:#d4a06d; /* farbe ändern */
-        text-decoration: underline; /* decoration ändern */
-        text-decoration-color:#d4a06d; /* man kann auch die farbe der decoration ändern */
-    }
-    img {
-        width:15vw;
-    }
-
-    .top_text{
-        display: flex;
-        flex-direction: column;
-        transform: scale(1.2);
-        overflow: hidden;
-        transform-origin: center center;
-        padding-left: 30px;
-        padding-top: 30px;
-    }
-
-    .button {
-        background-color: #b58656; /* Hintergrundfarbe des Buttons */
-        color: #fbf2ea; /* Textfarbe des Buttons */
-        padding:1px 9px; /* Innenabstand des Buttons */
-        border: 2px solid rgb(26, 21, 26); /* Entfernt die Standard-Border des Buttons */
-        border-radius: 8px; /* Runde die Ecken des Buttons ab */
-        font-size: 12px; /* Schriftgröße des Buttons */
-        cursor: pointer; /* Zeigt an, dass der Button anklickbar ist */
-        touch-action: auto;
-    }
-
-    .input {
-        background-color: #b58656;
-        color: #fbf2ea; 
-        font-size: 12px;
-    }
-
-    .input::placeholder {
-        color: #fbf2ea; 
-    }
-
-
-    </style>
+    <link rel = "stylesheet" href="{{ url_for('static', filename = 'search.css')}}">
     
 </head>
     <body>
@@ -114,11 +28,10 @@
                 <div class = "result_element">
                     <div class = "result_title">
                         <a href={{e[0]}}>{{e[1]}}</a>
-                    </div>
-
-                    <div class = "result_link">
                         <p class="link_presentation">{{e[0]}}</p>
                     </div>
+
+                   
 
                     <div class = "result_content">
                         <p class="subcontent">{{e[2]}}</p>
