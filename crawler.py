@@ -23,30 +23,15 @@ link_stack = [start_page]
 while link_stack:
     current_link = link_stack.pop()
 
-    r = requests.get(current_link, timeout=3)
+    r = requests.get(current_link, timeout=10)
     if  199 < r.status_code < 299:
         #parse content with bs4
         soup = BeautifulSoup(r.content, 'html.parser')
-
-        #not sure about this part so far
-        extracted_soup = BeautifulSoup(r.content, 'html.parser')
-        #tags that should be extracted before we retrieve main-content 
-        #we decided to leave 'a' tags out for our case, but generally
-        #the 'a' tags could contain important information and be mid-sentence
-        
-        tags_to_extract = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'a']
-        #extracting tags from extracted_soup
-        for tag in extracted_soup.find_all(tags_to_extract):
-            tag.extract()
-
         
         #add link and content to dictionary
-
         visited_links[current_link] = {
             'title': soup.title.string if soup.title else "",
             'content': soup.get_text(), #maybe optimize this to just use main-content
-            #get all of the text-content of the body
-            'main-content': extracted_soup.body.get_text(separator='\n', strip=True)
         }
 
         #iterate over all links on current site (current_link)
@@ -61,7 +46,7 @@ while link_stack:
 
 
 #create schema for indexlist with title, content and link
-schema = Schema(title=TEXT(stored=True), content=TEXT(stored=True), main_content=TEXT(stored=True), link=ID(stored=True))
+schema = Schema(title=TEXT(stored=True), content=TEXT(stored=True), link=ID(stored=True))
 
 #create an index in the directory indexdir
 ix = create_in("indexdir", schema)
@@ -69,7 +54,7 @@ writer = ix.writer()
 
 for key in visited_links:
     #do we have to use the 'u' in front of the strings here too?
-    writer.add_document(title=visited_links[key]['title'], content=visited_links[key]['content'], main_content=visited_links[key]['main-content'], link=key)
+    writer.add_document(title=visited_links[key]['title'], content=visited_links[key]['content'], link=key)
 
 #commit changes
 writer.commit()

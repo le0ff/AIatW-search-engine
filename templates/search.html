@@ -16,7 +16,7 @@
                     <input  class = "input" type="text" name="searchinput" placeholder="Type your query...">
                     <button class = "button" type="submit">Search!</button>
                 </form>
-                <p>{{ searchinfo }}</p>
+                <p>{{ searchinfo | safe }}</p>
             </div>
             <div class = "top_picture">
                 <img src="https://cdn.dribbble.com/users/1044993/screenshots/15202490/quokka_dribbble_4x.png" >
