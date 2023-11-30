@@ -29,13 +29,14 @@ def searchingIndex(search_prompt):
 
         #for every word in searchprompt, we use the first suggestion of the corrector
         for word in search_prompt.split():
-            corrected_prompt += corrector.suggest(word, limit=1)[0] + " "
+            if corrector.suggest(word, limit=1):
+                corrected_prompt += corrector.suggest(word, limit=1)[0] + " "
         
         #have to cut the last character (space) to make corrected_prompt comparable to search prompt
         corrected_prompt = corrected_prompt[:-1]
 
         #typoChecker gets set to a link with the "corrected" term
-        if search_prompt != corrected_prompt:
+        if search_prompt != corrected_prompt and corrected_prompt:
             typoChecker = f"Did you mean: <a href='{url_for('search', searchinput=corrected_prompt)}' class='typo'>{corrected_prompt}</a>"
 
         #iterate over results filling the list with sublist which contain the search-result-information
